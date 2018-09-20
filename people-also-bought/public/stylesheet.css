@@ -1,14 +1,14 @@
 body {
-    background-color: white;
-    font-family: D-DIN;
-  }
+  background-color: white;
+  font-family: D-DIN;
+}
 
 h1 {
-    color: #171718;
-    font-size: 28px;
-    font-weight: medium;
-    margin-left: 60px;
-    padding-left: 60px;
+  color: #171718;
+  font-size: 28px;
+  font-weight: medium;
+  margin-left: 60px;
+  padding-left: 60px;
 }
 
 .company-title {
@@ -29,7 +29,7 @@ h1 {
   margin-bottom: -24px;
   font-size: 26px;
   font-weight: 500;
-  letter-spacing: -.14px;
+  letter-spacing: -0.14px;
   line-height: 30px;
 }
 
@@ -42,7 +42,7 @@ h1 {
 }
 
 .percentages {
-  color: #21ce99 ;
+  color: #21ce99;
   font-size: 13px;
   font-display: bold;
   padding-bottom: 20px;
@@ -63,7 +63,7 @@ h1 {
 }
 
 .flex-item {
-  border: 1px solid #f4f4f5;;
+  border: 1px solid #f4f4f5;
   border-radius: 2px;
   padding: 23px;
   cursor: pointer;
@@ -82,10 +82,10 @@ h1 {
   margin-right: 12px;
   overflow: hidden;
   padding: 22px 23px;
-  -webkit-transition: border-color .25s,-webkit-box-shadow .25s;
-  transition: border-color .25s,-webkit-box-shadow .25s;
-  transition: border-color .25s,box-shadow .25s;
-  transition: border-color .25s,box-shadow .25s,-webkit-box-shadow .25s;
+  -webkit-transition: border-color 0.25s, -webkit-box-shadow 0.25s;
+  transition: border-color 0.25s, -webkit-box-shadow 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  transition: border-color 0.25s, box-shadow 0.25s, -webkit-box-shadow 0.25s;
   width: 160.5px;
 }
 
@@ -105,10 +105,8 @@ h1 {
   padding: 8px;
 }
 
-
-
 .company-price {
-  color: #21ce99 ;
+  color: #21ce99;
   font-size: 26px;
   font-display: bold;
 }
@@ -117,7 +115,6 @@ h1 {
   font-size: 2.5rem;
   font-weight: 300;
 }
-
 
 p:hover {
   text-decoration: none;
@@ -142,7 +139,7 @@ i {
 }
 
 .leftArrow:hover {
-  color:  #21ce99;
+  color: #21ce99;
 }
 
 .rightArrow {
@@ -153,5 +150,5 @@ i {
 }
 
 .rightArrow:hover {
-  color:  #21ce99;
+  color: #21ce99;
 }

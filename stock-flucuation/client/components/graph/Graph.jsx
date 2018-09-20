@@ -3,6 +3,7 @@ import './Graph.css';
 import { XYPlot, LineSeries, Crosshair, MarkSeries } from 'react-vis';
 import * as moment from 'moment';
 import '../../../node_modules/react-vis/dist/style.css';
+import xAxis from 'react-vis/dist/plot/axis/x-axis';
 
 class Graph extends Component {
   constructor(props) {
@@ -15,13 +16,15 @@ class Graph extends Component {
 
   render() {
     const { hoveredNode, show } = this.state;
+    const end = this.props.showDay ? this.props.currentTicks.length * 13 : 800;
     return (
-      <div className="uk-container-large">
+      <div className="uk-container-small">
         <XYPlot
           height={300}
           width={900}
           stroke={this.props.marketIsUp ? '#21ce99' : '#f45531'}
           yRange={[10, 180]}
+          xRange={[10, end]}
           onMouseLeave={() => {
             this.setState({
               show: false
@@ -36,10 +39,10 @@ class Graph extends Component {
                 hoveredNode: {
                   x: datapoint.x,
                   y: datapoint.y,
-                  time: moment(datapoint.dateTime).format('hh:mm A'),
-                  dateTime: moment(datapoint.dateTime).format(
-                    'hh:mm A, MMM DD'
-                  ),
+                  time: moment(datapoint.dateTime).format('hh:mm A') + ' ET',
+                  dateTime:
+                    moment(datapoint.dateTime).format('hh:mm A, MMM DD') +
+                    ' ET',
                   date: moment(datapoint.dateTime).format('MMM DD, YYYY')
                 },
                 show: true

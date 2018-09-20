@@ -12,12 +12,11 @@ class App extends React.Component {
     this.state = {
       companies: [],
       currentCompanies: [],
-      currentPrices: [],
-      currentPercentages: [],
+      currentPrices: [43.25, 75.23, 98.12, 312.12],
+      currentPercentages: [14.23, 18.23, 45.23, 38.12],
       min: 1,
       max: 8,
-      priceisUp: true,
-      marketisOpen: true,
+      marketisOpen: false,
       showRight: true,
       showLeft: false
     };
@@ -27,6 +26,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    const time = moment();
+    const isOpen = moment('9:00', 'hh:mm');
+    const isClosed = moment('15:00', 'hh:mm');
+    const marketisOpen = time.isBetween(isOpen, isClosed);
+    this.setState({ marketisOpen });
     axios
       .get('http://localhost:3003/people-also-bought', {
         params: {
@@ -53,7 +57,7 @@ class App extends React.Component {
 
   updateData() {
     const { currentCompanies } = this.state;
-    const appScroll = this;
+    const thisFunc = this;
 
     function percentDiff(priceOne, priceTwo) {
       return ((priceTwo - priceOne) / priceOne) * 100;
@@ -66,7 +70,7 @@ class App extends React.Component {
         const isClosed = moment('15:00', 'hh:mm');
         const marketisOpen = time.isBetween(isOpen, isClosed);
 
-        appScroll.setState({
+        thisFunc.setState({
           currentPrices: [
             currentCompanies[0].currentDay[i].currentPrice,
             currentCompanies[1].currentDay[i].currentPrice,
@@ -96,7 +100,7 @@ class App extends React.Component {
         if (i++) {
           theLoop(i);
         }
-      }, 300);
+      }, 10000);
     }
     theLoop(1);
   }
@@ -133,24 +137,31 @@ class App extends React.Component {
       currentCompanies,
       currentPrices,
       marketisOpen,
-      priceisUp,
       showRight,
       showLeft
     } = this.state;
 
     return (
-      <div>
-        <h1>People Also Bought</h1>
+      <div
+        className={marketisOpen ? 'robinhood-is-open' : 'robinhood-is-closed'}
+      >
+        <h1
+          className={`header-title ${
+            marketisOpen ? 'robinhood-is-open' : 'robinhood-is-closed'
+          } `}
+        >
+          People Also Bought
+        </h1>
         <div>
           <CompanyList
             companies={currentCompanies}
             currentPrices={currentPrices}
             currentPercentages={currentPercentages}
             marketisOpen={marketisOpen}
-            price={priceisUp}
             showRight={showRight}
             showLeft={showLeft}
             handleArrowClick={this.handleArrowClick}
+            updatePriceChange={this.updatePriceChange}
           />
         </div>
       </div>

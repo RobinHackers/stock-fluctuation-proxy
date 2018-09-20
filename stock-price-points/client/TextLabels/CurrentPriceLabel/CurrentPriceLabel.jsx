@@ -9,11 +9,10 @@ const CurrentPriceLabel = ({ priceOnTheLine, percentChange, upDownColor }) => {
     color: upDownColor,
     transform: `translateX(${currPriceToTransform}px)`
   };
-
   const highLowLabel = percentChange > 0 ? 'Higher' : 'Lower';
   return (
     <header className="label-header">
-      <div className="currentPriceContainer" style={currentPriceContainer}>
+      <div className="currentPriceContainer" styles={{ currentPriceContainer }}>
         <p>
           {`${Math.floor(Math.abs(percentChange))}% ${highLowLabel} `}
           <span className="right-now">Right Now</span>

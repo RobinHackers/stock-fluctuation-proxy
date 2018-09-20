@@ -2,20 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Analyst from './Analyst.jsx';
 
-const Company = ({ currentPercentages, company, price }) => (
-  <div className="flex-item">
-    <div className="company-title">
-      {company.company} <br />
-      <span className="analyst">
-        <Analyst
-          display={`${company.percentage}%`}
-          tooltip={`${company.percentage}% anaylsts agree that
+const Company = ({
+  marketisOpen,
+  currentPercentage,
+  company,
+  price,
+}) => (
+  <div className={marketisOpen ? 'robinhood-is-open' : 'robinhood-is-closed'}>
+    <div className={`flex-item ${marketisOpen ? 'robinhood-open' : 'robinhood-closed'}`}>
+      <div className="company-title">
+        {company.company}
+        <br />
+        <span>
+          <Analyst
+            display={`${company.percentage}%`}
+            tooltip={`${company.percentage}% anaylsts agree that
         ${company.company} is a buy.`}
-        />
+            marketisOpen={marketisOpen}
+          />
+        </span>
+      </div>
+      <div className={`price ${currentPercentage > 0 ? 'price-is-up' : 'price-is-down'}`}>{`$${price}`}</div>
+      <span className={`${currentPercentage > 0 ? 'price-is-up' : 'price-is-down'}`}>
+        {`${currentPercentage}%`}
       </span>
     </div>
-    <div className="price">{`$${price}`}</div>
-    <span className="differences">{currentPercentages}</span>
   </div>
 );
 
@@ -24,10 +35,11 @@ Company.propTypes = {
     name: PropTypes.string,
     group: PropTypes.number,
     percentage: PropTypes.number,
-    currentDay: PropTypes.arrayOf(PropTypes.object)
+    currentDay: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   price: PropTypes.number.isRequired,
-  currentPercentages: PropTypes.number.isRequired
+  currentPercentage: PropTypes.number.isRequired,
+  marketisOpen: PropTypes.bool.isRequired,
 };
 
 export default Company;

@@ -39,7 +39,7 @@ class App extends React.Component {
 
     this.getDataSetInitialState = () => {
       axios
-        .get(`http://localhost:3002/data/company/onecompany`)
+        .get(`http://localhost:3002/data/company/Hack%20Reactor`)
         .then(output => {
           const { data } = output;
           const { yearly, currentPrice } = data[0];

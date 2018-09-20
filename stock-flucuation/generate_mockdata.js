@@ -1,12 +1,15 @@
 const faker = require('faker');
 const fs = require('fs');
 const path = require('path');
+const compsArr = require('./company_names');
 
 var data = function(numOfCompanies) {
   var results = [];
   for (var i = 0; i < numOfCompanies; i++) {
     var obj = {
-      company: faker.company.companyName(),
+      _id: compsArr[i]._id,
+      company: compsArr[i].companyName,
+      companyAbbr: compsArr[i].companyAbbriev,
       anaylst_percent: faker.random.number({ min: 1, max: 99 }),
       robinhood_owners: faker.random.number({ min: 20000, max: 200000 }),
       tickers: []
@@ -57,9 +60,9 @@ function getMonthlyWeekday(n, d, m, y) {
 function timesAndPrice() {
   var x = 10;
   var times = [];
-  var startingTime = 540;
+  var startingTime = 360;
 
-  for (var i = 0; startingTime < 18.05 * 60; i++) {
+  for (var i = 0; startingTime < 15.1 * 60; i++) {
     var hh = Math.floor(startingTime / 60);
     var mm = startingTime % 60;
     var tempObj = {};

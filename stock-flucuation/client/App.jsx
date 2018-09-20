@@ -53,7 +53,7 @@ class App extends Component {
       .get('http://localhost:3001/api')
       .then(res => res.data)
       .then(data => {
-        const company = data[3];
+        const company = data[0];
         this.allTicks(company.tickers);
         this.setState({ companies: data, company });
       });
@@ -140,7 +140,7 @@ class App extends Component {
           time = time.split(':').join('');
           return {
             x: time,
-            y: parseInt(ticks.currentPrice),
+            y: parseInt(ticks.currentPrice) * -1,
             dateTime,
             price: ticks.currentPrice
           };
@@ -161,7 +161,7 @@ class App extends Component {
           count = count + 0.5;
           return {
             x: count,
-            y: parseInt(ticks.currentPrice),
+            y: parseInt(ticks.currentPrice) * -1,
             dateTime,
             price: ticks.currentPrice
           };
@@ -179,7 +179,7 @@ class App extends Component {
         const lastTick = ticker.price[ticker.price.length - 1];
         return {
           x: index + 1,
-          y: parseInt(lastTick.currentPrice),
+          y: parseInt(lastTick.currentPrice) * -1,
           dateTime: date,
           price: lastTick.currentPrice
         };
@@ -190,7 +190,7 @@ class App extends Component {
 
   checkMarketValue() {
     const { startingPrice, currentPrice } = this.state;
-    if (parseInt(currentPrice) >= parseInt(startingPrice)) {
+    if (Math.abs(parseInt(currentPrice)) < Math.abs(parseInt(startingPrice))) {
       this.setState({ marketIsUp: false });
     } else {
       this.setState({ marketIsUp: true });

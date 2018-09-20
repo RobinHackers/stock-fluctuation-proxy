@@ -31,8 +31,8 @@ const GraphHeaderContainer = props => {
                 $
                 <CountUp
                   decimals="2"
-                  start={props.lastPrice}
-                  end={props.currentPrice}
+                  start={Math.abs(props.lastPrice)}
+                  end={Math.abs(props.currentPrice)}
                   duration={2}
                 />
               </span>
