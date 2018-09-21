@@ -9,14 +9,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.15/css/uikit.min.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="stylesheet.css">
+  <link rel="stylesheet" href="https://s3.amazonaws.com/proxy-project/stylesheet.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <title>Robin Hackers</title>
+
 </head>
 
-<body>
-  <div class="uk-container-large header day">
-    <img class="header-img" src="header.png" alt="">
+<body class="day">
+  <div class="uk-container-large header">
+    <img class="header-img" src="https://s3.amazonaws.com/proxy-project/header.png" alt="">
   </div>
   <div class="uk-container-small" style="margin-bottom: 20px;">
     <div id="app"></div>
@@ -25,12 +26,16 @@
     <div id="bought"></div>
   </div>
 
+
   <script src="/lib/react.development.js"></script>
   <script src="/lib/react-dom.development.js"></script>
-  <script src="http://localhost:3001/bundle.js"></script>
-  <script src="http://localhost:3002/bundle.js"></script>
-  <script src="http://localhost:3003/bundle.js"></script>
-  <script src="http://localhost:3004/bundle.js"></script>
+  <script src="https://s3.amazonaws.com/stock-flucutation/bundle.js"></script>
+  <!-- <script src="http://localhost:3001/bundle.js"></script> -->
+
+  <script src="https://s3.amazonaws.com/proxy-project/stock-points/bundle.js"></script>
+  <script src="https://s3.amazonaws.com/proxy-project/people-also-bought/bundle.js"></script>
+  <script src="https://s3.amazonaws.com/proxy-project/sidenav/bundle.js"></script>
+
   <script>
     let body = document.querySelector('body');
     let img = document.querySelector('.header-img');
@@ -44,7 +49,7 @@
       header.classList.remove('day');
       header.classList.add('night');
     } else {
-      img.setAttribute('src', 'night.png');
+      img.setAttribute('src', 'https://s3.amazonaws.com/proxy-project/night.png');
       body.classList.remove('day');
       body.classList.add('night');
       header.classList.remove('day');
