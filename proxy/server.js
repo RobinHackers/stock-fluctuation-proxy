@@ -7,24 +7,16 @@ var proxy = require('express-http-proxy');
 
 const PORT = process.env.PORT || 3000;
 
-// Allow cross origin requests
-// app.use(function(req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept'
-//   );
-//   next();
-// });
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/:company', express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/:company', express.static(path.join(__dirname, 'public')));
 app.use('/api', proxy('localhost:3001'));
-app.use('/data/company', proxy('localhost:3002'));
-app.use('/people-also-bought', proxy('localhost:3003'));
-app.use('/stocks/sideBar', proxy('localhost:3004'));
+app.use('/api/data/company', proxy('localhost:3002'));
+app.use('/api/people-also-bought', proxy('localhost:3003'));
+app.use('/api/stocks/sideBar', proxy('localhost:3004'));
 
 app.listen(PORT, err =>
   console.log(
