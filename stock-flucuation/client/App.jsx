@@ -57,6 +57,7 @@ class App extends Component {
         this.setState({ companies: data, company });
       });
   }
+
   checkTime() {
     // Check time for app theme
     const time = moment();
@@ -69,6 +70,8 @@ class App extends Component {
       this.setState({ marketIsOpen: false });
     }
   }
+
+  // Grabbing stock ticks from db
   allTicks(tickers) {
     const allTicks = tickers.filter(ticker => {
       if (moment(ticker.date).isBefore(moment())) {
@@ -103,7 +106,7 @@ class App extends Component {
       lastPrice,
       currentPrice
     });
-    this.checkMarketValue();
+    setInterval(() => this.checkMarketValue(), 1000);
     this.updateTicks();
   }
 
@@ -146,6 +149,7 @@ class App extends Component {
         });
       })
     );
+    console.log(array, 'day');
     return array;
   }
 
@@ -167,6 +171,8 @@ class App extends Component {
         });
       })
     );
+    console.log(array, 'week');
+
     return array;
   }
 
@@ -184,11 +190,14 @@ class App extends Component {
         };
       })
     );
+    console.log(array, 'month');
+
     return array;
   }
 
   checkMarketValue() {
     const { startingPrice, currentPrice } = this.state;
+    console.log(startingPrice, currentPrice);
     if (Math.abs(parseInt(currentPrice)) < Math.abs(parseInt(startingPrice))) {
       this.setState({ marketIsUp: false });
     } else {
@@ -198,27 +207,40 @@ class App extends Component {
   changeTimeLimit(period) {
     switch (period) {
       case 'day':
-        this.updateTicks();
-        return this.setState({
+        const tickers = this.state.currentTicks;
+        this.setState({
           showDay: true,
           showWeek: false,
-          showMonth: false
+          showMonth: false,
+          startingPrice: tickers[0],
+          currentPrice: tickers[tickers.length - 1]
         });
+        this.updateTicks();
+        break;
       case 'week':
         clearInterval(this.updateTicks);
-        return this.setState({
+        const timeTicks = this.transformWeekTicks(
+          this.state.allTicks.slice(-5)
+        );
+        this.setState({
           showDay: false,
           showMonth: false,
           showWeek: true,
-          timeTicks: this.transformWeekTicks(this.state.allTicks.slice(-5))
+          timeTicks,
+          startingPrice: timeTicks[0].price,
+          currentPrice: timeTicks[timeTicks.length - 1].price
         });
+        break;
       case 'month':
         clearInterval(this.updateTicks);
+        const ticks = this.transformMonthTicks(this.state.allTicks);
         this.setState({
           showDay: false,
           showWeek: false,
           showMonth: true,
-          timeTicks: this.transformMonthTicks(this.state.allTicks)
+          startingPrice: ticks[0].price,
+          currentPrice: ticks[ticks.length - 1].price,
+          timeTicks: ticks
         });
         break;
       default:
