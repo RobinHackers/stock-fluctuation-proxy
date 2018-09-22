@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const routes = require('../routes');
+const Company = require('../models/Company.js');
 
 mongoose.connect(
   process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/stocks',
@@ -22,13 +24,14 @@ app.use(function(req, res, next) {
   );
   next();
 });
-app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
 
-app.use('/api', routes);
-
+app.use('/:company', express.static('public'));
+// app.use('/api/graph', routes);
+app.use('/graph', routes);
+app.use('/api/graph', routes);
 module.exports = {
   app,
   mongoose

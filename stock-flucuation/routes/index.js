@@ -1,20 +1,12 @@
-const express = require("express");
+const express = require('express');
 const Router = express.Router();
-const Ctrl = require("../controllers/");
+const Ctrl = require('../controllers/');
 
-Router.route("/:company_name")
+Router.route('/:company')
   .all((req, res, next) => {
+    console.log('hit');
     next();
   })
   .get(Ctrl.fetchCompany);
-
-Router.route("/")
-  .all((req, res, next) => {
-    next();
-  })
-  .get(Ctrl.fetch);
-// .post()
-// .patch()
-// .delete();
 
 module.exports = Router;

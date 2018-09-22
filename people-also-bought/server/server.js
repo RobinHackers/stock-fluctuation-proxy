@@ -18,14 +18,14 @@ mongoose.connect(
 const app = express();
 const PORT = 3003;
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   );
+//   next();
+// });
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(logger('dev'));
@@ -34,6 +34,16 @@ app.use(express.static(path.join(__dirname, '../public')));
 function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+app.get('/:company', (req, res) => {
+  console.log('hit');
+  Company.find({ group: getRandomIntInclusive(1, 8) }).exec((err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
+    }
+  });
+});
 
 app.get('/people-also-bought', (req, res) => {
   Company.find({ group: getRandomIntInclusive(1, 8) }).exec((err, results) => {

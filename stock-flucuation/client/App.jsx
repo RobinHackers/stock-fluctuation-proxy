@@ -12,7 +12,6 @@ import Header from './components/header/Header.jsx';
 import GraphHeaderContainer from './components/graphHeader/GraphHeaderContainer.jsx';
 import Graph from './components/graph/Graph.jsx';
 import Footer from './components/footer/Footer.jsx';
-
 class App extends Component {
   constructor() {
     super();
@@ -48,9 +47,9 @@ class App extends Component {
   componentDidMount() {
     this.checkTime();
     setInterval(() => this.checkTime(), 1000);
-
+    // Get company call
     axios
-      .get('http://localhost:3001/api')
+      .get('/api/graph' + location.pathname)
       .then(res => res.data)
       .then(data => {
         const company = data[0];

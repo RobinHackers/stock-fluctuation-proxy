@@ -11,17 +11,6 @@ app.use(parser.json());
 app.use(logger('dev'));
 
 app.use(express.static(path.join(__dirname, '../public')));
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
-});
-app.get('/:company', function(req, res) {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
-});
 
 mongoose.connect(
   'mongodb://localhost/fecdata',
@@ -31,19 +20,10 @@ mongoose.connect(
   }
 );
 
-app.get('/stocks/sideBar', function(req, res) {
-  db.find({}, function(err, results) {
-    if (err) {
-      return console.log(err);
-    } else {
-      res.json(results);
-    }
-  });
-});
-
-app.get('/stocks/sideBar/:company', (req, res) => {
-  const company = req.params.company;
-  db.find({ company }, null, (err, result) => {
+app.get('/:company', (req, res) => {
+  console.log('hit');
+  const companyName = req.params.company;
+  db.find({ companyName }, null, (err, result) => {
     if (err) {
       return console.log('callback error');
     }

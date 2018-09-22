@@ -32,7 +32,7 @@ class App extends React.Component {
     const marketisOpen = time.isBetween(isOpen, isClosed);
     this.setState({ marketisOpen });
     axios
-      .get('http://localhost:3003/people-also-bought', {
+      .get('/api/people-also-bought' + location.pathname, {
         params: {
           group: this.getRandomIntInclusive(1, 8)
         }
