@@ -149,7 +149,6 @@ class App extends Component {
         });
       })
     );
-    console.log(array, 'day');
     return array;
   }
 
@@ -171,7 +170,6 @@ class App extends Component {
         });
       })
     );
-    console.log(array, 'week');
 
     return array;
   }
@@ -190,14 +188,12 @@ class App extends Component {
         };
       })
     );
-    console.log(array, 'month');
 
     return array;
   }
 
   checkMarketValue() {
     const { startingPrice, currentPrice } = this.state;
-    console.log(startingPrice, currentPrice);
     if (Math.abs(parseInt(currentPrice)) < Math.abs(parseInt(startingPrice))) {
       this.setState({ marketIsUp: false });
     } else {
