@@ -9,7 +9,7 @@ const routes = require('../routes');
 const Company = require('../models/Company.js');
 
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/stocks',
+  process.env.MONGODB_URL || 'mongodb://mongo:27017/stocks',
   { useNewUrlParser: true },
   err => {
     console.log(err || `MongoDB connected`);

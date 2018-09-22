@@ -11,10 +11,11 @@ module.exports = {
   },
 
   fetchCompany: (req, res) => {
-    console.log('hit', req.params);
+    // console.log('hit', req.params);
     const company = req.params.company;
     Company.find({ company: company }, (err, company) => {
       if (err) return console.log(err);
+      console.log(company);
       res.json(company);
     });
   }
