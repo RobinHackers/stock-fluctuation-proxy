@@ -38,52 +38,50 @@ class App extends React.Component {
     };
 
     this.getDataSetInitialState = () => {
-      axios
-        .get(`http://localhost:3002/data/company/Hack%20Reactor`)
-        .then(output => {
-          const { data } = output;
-          const { yearly, currentPrice } = data[0];
-          const { yearAverage, yearLowest, yearHighest } = yearly;
-          // console.log(currentPrice);
-          // percentage Change Helper
-          function percentageChange(valOne, valTwo) {
-            return ((valTwo - valOne) / valOne) * 100;
-          }
-          // // Number On The Line Calculation
-          function percentOfNumOnLine(amount) {
-            const newRange = yearHighest - yearLowest;
-            const newNum = amount - yearLowest;
-            return newNum / newRange;
-          }
+      axios.get(`/api/data/company` + location.pathname).then(output => {
+        const { data } = output;
+        const { yearly, currentPrice } = data[0];
+        const { yearAverage, yearLowest, yearHighest } = yearly;
+        // console.log(currentPrice);
+        // percentage Change Helper
+        function percentageChange(valOne, valTwo) {
+          return ((valTwo - valOne) / valOne) * 100;
+        }
+        // // Number On The Line Calculation
+        function percentOfNumOnLine(amount) {
+          const newRange = yearHighest - yearLowest;
+          const newNum = amount - yearLowest;
+          return newNum / newRange;
+        }
 
-          const time = moment();
-          const isOpen = moment('9:00', 'hh:mm');
-          const isClosed = moment('15:00', 'hh:mm');
+        const time = moment();
+        const isOpen = moment('9:00', 'hh:mm');
+        const isClosed = moment('15:00', 'hh:mm');
 
-          const marketIsOpen = time.isBetween(isOpen, isClosed);
+        const marketIsOpen = time.isBetween(isOpen, isClosed);
 
-          const averageOnTheLine = 676 * percentOfNumOnLine(yearAverage);
-          const priceOnTheLine = 676 * percentOfNumOnLine(currentPrice[0]);
-          const percentChange = percentageChange(yearAverage, currentPrice[0]);
+        const averageOnTheLine = 676 * percentOfNumOnLine(yearAverage);
+        const priceOnTheLine = 676 * percentOfNumOnLine(currentPrice[0]);
+        const percentChange = percentageChange(yearAverage, currentPrice[0]);
 
-          this.reloadStateData(
-            currentPrice,
-            yearAverage,
-            yearLowest,
-            yearHighest
-          );
+        this.reloadStateData(
+          currentPrice,
+          yearAverage,
+          yearLowest,
+          yearHighest
+        );
 
-          this.setState({
-            weeklyData: data[0].weeks.sort(
-              (a, b) => a.weekAverage - b.weekAverage
-            ),
-            yearly,
-            averageOnTheLine,
-            priceOnTheLine,
-            percentChange,
-            marketIsOpen
-          });
+        this.setState({
+          weeklyData: data[0].weeks.sort(
+            (a, b) => a.weekAverage - b.weekAverage
+          ),
+          yearly,
+          averageOnTheLine,
+          priceOnTheLine,
+          percentChange,
+          marketIsOpen
         });
+      });
     };
 
     this.reloadStateData = (
